@@ -15,7 +15,7 @@ interface Props {
 
 const CharacterPage: FC<Props> = ({ character, homeworld, films }) => {
     return (
-        <MainLayout>
+        <MainLayout title={character.name}>
             <Card css={{ maxWidth: '1400px', margin: 'auto' }}>
                 <Card.Header>
                     <Container>

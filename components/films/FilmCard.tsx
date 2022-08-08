@@ -7,7 +7,9 @@ interface Props {
 }
 
 export const FilmCard: FC<Props> = ({ film }) => {
-    const handleCrawl = () => { }
+    const handleCrawl = () => {
+        console.log(film.opening_crawl)
+    }
     return (
         <Grid xs={12} sm={4} md={3}>
             <Card
