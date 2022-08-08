@@ -1,4 +1,5 @@
 export * from './findCharacters'
+export * from './formatDate'
 export * from './getCharacterInfo'
 export * from './getCharacterList'
 export * from './getCharacterNameById'

@@ -4,7 +4,7 @@ import { Card, Container, Divider, Grid, Text } from '@nextui-org/react'
 import { Character, Film } from '../../interfaces'
 import { MainLayout } from '../../components/layouts'
 import { FilmCard } from '../../components/films'
-import { findCharacters, getCharacterNameById, getFilmInfo, getIdFromUrl, getPlanetNameById } from '../../utils'
+import { findCharacters, formatDate, getCharacterNameById, getFilmInfo, getIdFromUrl, getPlanetNameById } from '../../utils'
 import { CharacterInfoContainer } from '../../components/character'
 
 interface Props {
@@ -20,7 +20,7 @@ const CharacterPage: FC<Props> = ({ character, homeworld, films }) => {
                 <Card.Header>
                     <Container>
                         <Text h1 transform="capitalize" css={{ textAlign: 'center' }} color="warning">{character.name}</Text>
-                        <Text color="#787F85" css={{ textAlign: 'center' }}>Last edition: {character.edited}</Text>
+                        <Text color="#787F85" css={{ textAlign: 'center' }}>Last edition: {formatDate(character.edited)}</Text>
                     </Container>
                 </Card.Header>
                 <Divider />
