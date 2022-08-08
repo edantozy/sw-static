@@ -2,7 +2,13 @@ This is a [Next.js] project bootstrapped with [`create-next-app`]. This applicat
 
 ## Getting Started
 
-First, run the build command:
+First, install all the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the build command:
 
 ```bash
 npm run build
