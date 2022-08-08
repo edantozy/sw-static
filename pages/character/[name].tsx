@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
                 return { params: { name: name.replaceAll(' ', '-') } }
             })
         ,
-        fallback: false
+        fallback: "blocking"
     }
 }
 
@@ -87,7 +87,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { name } = params as { name: string },
         res = await findCharacters(name.replaceAll('-', ' '))
 
-    if (!res) return { redirect: { destination: '/', permanent: false } }
+    if (!res || res.results.length === 0) return { notFound: true }
 
     const character = res.results[0],
         { films } = character

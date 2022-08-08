@@ -1,4 +1,5 @@
 export * from './characterInfo'
+export * from './characterList'
 export * from './charactersSearchResult'
 export * from './filmInfo'
 export * from './planetInfo'

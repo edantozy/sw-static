@@ -1,7 +1,13 @@
-import React from 'react'
-import { Button, Container, Pagination, Table } from '@nextui-org/react'
+import React, { FC } from 'react'
+import { Container, Pagination, Table } from '@nextui-org/react'
+import { Character } from '../../interfaces'
+import NextLink from 'next/link'
 
-export const CharacterList = () => {
+interface Props {
+  characters: Character[]
+}
+
+export const CharacterList: FC<Props> = ({ characters }) => {
   return (
     <>
       <Table
@@ -9,6 +15,7 @@ export const CharacterList = () => {
           height: "auto",
           minWidth: "100%"
         }}
+        aria-label="Character List"
       >
         <Table.Header>
           <Table.Column>NAME</Table.Column>
@@ -16,32 +23,23 @@ export const CharacterList = () => {
           <Table.Column>ACTIONS</Table.Column>
         </Table.Header>
         <Table.Body>
-          <Table.Row key="1">
-            <Table.Cell>Tony Reichert</Table.Cell>
-            <Table.Cell>CEO</Table.Cell>
-            <Table.Cell>
-              <Button auto color="primary" rounded bordered>See details</Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row key="2">
-            <Table.Cell>Zoey Lang</Table.Cell>
-            <Table.Cell>Technical Lead</Table.Cell>
-            <Table.Cell><Button auto color="primary" rounded bordered>See details</Button></Table.Cell>
-          </Table.Row>
-          <Table.Row key="3">
-            <Table.Cell>Jane Fisher</Table.Cell>
-            <Table.Cell>Senior Developer</Table.Cell>
-            <Table.Cell>Active</Table.Cell>
-          </Table.Row>
-          <Table.Row key="4">
-            <Table.Cell>William Howard</Table.Cell>
-            <Table.Cell>Community Manager</Table.Cell>
-            <Table.Cell>Vacation</Table.Cell>
-          </Table.Row>
+          {
+            characters.map((character, i) => (
+              <Table.Row key={i}>
+                <Table.Cell>{character.name}</Table.Cell>
+                <Table.Cell>{character.homeworld}</Table.Cell>
+                <Table.Cell>
+                  <NextLink href={`/character/${character.name.replaceAll(' ', '-')}`} passHref>
+                    See details
+                  </NextLink>
+                </Table.Cell>
+              </Table.Row>
+            ))
+          }
         </Table.Body>
       </Table>
       <Container justify="center">
-        <Pagination css={{margin: 'auto'}} total={20} initialPage={1} />
+        <Pagination css={{ margin: 'auto' }} total={20} initialPage={1} />
       </Container>
     </>
   )
