@@ -1,4 +1,3 @@
-
 import { swAPI } from "../apis/"
 import { Character } from "../interfaces"
 

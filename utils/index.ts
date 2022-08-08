@@ -1,3 +1,6 @@
 export * from './findCharacters'
 export * from './getCharacterInfo'
 export * from './getCharacterNameById'
+export * from './getFilmInfo'
+export * from './getPlanetNameById'
+export * from './getIdFromUrl'

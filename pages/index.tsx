@@ -1,3 +1,4 @@
+import { Text } from '@nextui-org/react'
 import type { NextPage } from 'next'
 import { CharacterList } from '../components/character'
 import { MainLayout } from '../components/layouts'
@@ -5,7 +6,7 @@ import { MainLayout } from '../components/layouts'
 const HomePage: NextPage = () => {
   return (
     <MainLayout>
-      <h1>Home Page</h1>
+      <Text h1 css={{textAlign: 'center'}}>Star Wars Characters</Text>
       <CharacterList></CharacterList>
     </MainLayout>
   )

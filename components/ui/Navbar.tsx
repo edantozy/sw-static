@@ -1,6 +1,7 @@
-import { Image, Spacer, Text, useTheme } from '@nextui-org/react'
 import React from 'react'
+import { Image, Link, Spacer, Text, useTheme } from '@nextui-org/react'
 import { SearchButton } from '../search'
+import NextLink from 'next/link'
 
 export const Navbar = () => {
     const { theme } = useTheme()
@@ -22,8 +23,12 @@ export const Navbar = () => {
                 width={30}
                 height={30}
             />
-            <Text color="white" h2 css={{ marginLeft: '0.7rem' }}>SW</Text>
-            <Text color="white" h3 css={{ marginRight: '0.7rem' }}>App</Text>
+            <NextLink href="/" passHref>
+                <Link>
+                    <Text color="white" h2 css={{ marginLeft: '0.7rem' }}>SW</Text>
+                    <Text color="white" h3 css={{ marginRight: '0.7rem' }}>App</Text>
+                </Link>
+            </NextLink>
             <SearchButton />
             <Spacer css={{ flex: 1 }} />
         </div>
