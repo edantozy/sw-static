@@ -5,6 +5,7 @@ import { Character, Film } from '../../interfaces'
 import { MainLayout } from '../../components/layouts'
 import { FilmCard } from '../../components/films'
 import { findCharacters, getCharacterNameById, getFilmInfo, getIdFromUrl, getPlanetNameById } from '../../utils'
+import { CharacterInfoContainer } from '../../components/character'
 
 interface Props {
     character: Character,
@@ -24,26 +25,11 @@ const CharacterPage: FC<Props> = ({ character, homeworld, films }) => {
                 </Card.Header>
                 <Divider />
                 <Card.Body>
-                    <Container>
-                        <Text css={{ textAlign: 'center' }} size={30}>Homeworld:</Text>
-                        <Text css={{ textAlign: 'center' }} transform="capitalize">{homeworld}</Text>
-                    </Container>
-                    <Container>
-                        <Text css={{ textAlign: 'center' }} size={30}>Birth Year:</Text>
-                        <Text css={{ textAlign: 'center' }} transform="capitalize">{character.birth_year}</Text>
-                    </Container>
-                    <Container>
-                        <Text css={{ textAlign: 'center' }} size={30}>Gender:</Text>
-                        <Text css={{ textAlign: 'center' }} transform="capitalize">{character.gender}</Text>
-                    </Container>
-                    <Container>
-                        <Text css={{ textAlign: 'center' }} size={30}>Eyes Color:</Text>
-                        <Text css={{ textAlign: 'center' }} transform="capitalize">{character.eye_color}</Text>
-                    </Container>
-                    <Container>
-                        <Text css={{ textAlign: 'center' }} size={30}>Hair Color:</Text>
-                        <Text css={{ textAlign: 'center' }} transform="capitalize">{character.hair_color}</Text>
-                    </Container>
+                    <CharacterInfoContainer title="Birth Year:" text={character.birth_year} />
+                    <CharacterInfoContainer title="Homeworld:" text={homeworld} />
+                    <CharacterInfoContainer title="Gender:" text={character.gender} />
+                    <CharacterInfoContainer title="Eye Color:" text={character.eye_color} />
+                    <CharacterInfoContainer title="Hair Color:" text={character.hair_color} />
                 </Card.Body>
                 <Divider />
                 <Card.Footer>
@@ -107,7 +93,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             character,
             films: filmsArr,
             homeworld: planetName
-        }
+        },
+        revalidate: 86400
     }
 }
 

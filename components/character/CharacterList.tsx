@@ -1,45 +1,39 @@
-import React, { FC } from 'react'
-import { Container, Pagination, Table } from '@nextui-org/react'
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { Container, Grid, Pagination } from '@nextui-org/react'
 import { Character } from '../../interfaces'
-import NextLink from 'next/link'
+import { CharacterCard } from './CharacterCard'
 
 interface Props {
-  characters: Character[]
+  initialCharacters: Character[],
+  charactersList: Character[],
+  setCharactersList: Dispatch<SetStateAction<Character[]>>
 }
 
-export const CharacterList: FC<Props> = ({ characters }) => {
+export const CharacterList: FC<Props> = ({ initialCharacters, charactersList, setCharactersList }) => {
+  const [page, setPage] = useState(1),
+    perPage = 10,
+    totalPages = Math.ceil(initialCharacters.length / perPage)
+
+  useEffect(() => {
+    setCharactersList(initialCharacters.slice((page * perPage - perPage), (page * perPage)))
+  }, [page, setCharactersList, initialCharacters])
+
   return (
     <>
-      <Table
-        css={{
-          height: "auto",
-          minWidth: "100%"
-        }}
-        aria-label="Character List"
-      >
-        <Table.Header>
-          <Table.Column>NAME</Table.Column>
-          <Table.Column>HOME-WORLD</Table.Column>
-          <Table.Column>ACTIONS</Table.Column>
-        </Table.Header>
-        <Table.Body>
-          {
-            characters.map((character, i) => (
-              <Table.Row key={i}>
-                <Table.Cell>{character.name}</Table.Cell>
-                <Table.Cell>{character.homeworld}</Table.Cell>
-                <Table.Cell>
-                  <NextLink href={`/character/${character.name.replaceAll(' ', '-')}`} passHref>
-                    See details
-                  </NextLink>
-                </Table.Cell>
-              </Table.Row>
-            ))
-          }
-        </Table.Body>
-      </Table>
-      <Container justify="center">
-        <Pagination css={{ margin: 'auto' }} total={20} initialPage={1} />
+      <Grid.Container gap={2} justify="flex-start">
+        {
+          charactersList.map((character, i) => (
+            <CharacterCard
+              homeworld={character.homeworld}
+              name={character.name}
+              href={`/character/${character.name.replaceAll(' ', '-')}`}
+              key={i}
+            />
+          ))
+        }
+      </Grid.Container>
+      <Container display="flex" justify="center" css={{ margin: '1.5rem' }}>
+        <Pagination css={{ margin: 'auto' }} total={totalPages} initialPage={page} onChange={(page) => setPage(page)} />
       </Container>
     </>
   )

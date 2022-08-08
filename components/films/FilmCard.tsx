@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Card, Grid, Text } from '@nextui-org/react'
+import { Card, Divider, Grid, Text } from '@nextui-org/react'
 import { Film } from '../../interfaces'
 
 interface Props {
@@ -13,14 +13,17 @@ export const FilmCard: FC<Props> = ({ film }) => {
             <Card
                 isHoverable
                 isPressable
-                css={{
-                    padding: 10,
-                }}
                 onPress={handleCrawl}
+                variant="bordered"
             >
-                <Text h4 color="success">{film.title}</Text>
-                <Text>Directed by <strong>{film.director}</strong></Text>
-                <Text>Produced by <strong>{film.producer}</strong></Text>
+                <Card.Header>
+                    <Text h4 color="success">{film.title}</Text>
+                </Card.Header>
+                <Divider />
+                <Card.Body>
+                    <Text>Directed by <strong>{film.director}</strong></Text>
+                    <Text>Produced by <strong>{film.producer}</strong></Text>
+                </Card.Body>
             </Card>
         </Grid>
     )

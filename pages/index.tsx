@@ -1,19 +1,25 @@
-import { Text } from '@nextui-org/react'
+import React, { useState } from 'react'
 import type { GetStaticProps, NextPage } from 'next'
+import { Text } from '@nextui-org/react'
 import { Character } from '../interfaces'
 import { CharacterList } from '../components/character'
 import { MainLayout } from '../components/layouts'
-import { getCharacterList } from '../utils'
+import { getCharacterList, getFilmTitleById, getIdFromUrl, getPlanetNameById } from '../utils'
 
 interface Props {
-  characters: Character[]
+  initialCharacters: Character[]
 }
 
-const HomePage: NextPage<Props> = ({ characters }) => {
+const HomePage: NextPage<Props> = ({ initialCharacters }) => {
+  const [charactersList, setCharactersList] = useState(initialCharacters)
   return (
     <MainLayout>
       <Text h1 css={{ textAlign: 'center' }}>Star Wars Characters</Text>
-      <CharacterList characters={characters} />
+      <CharacterList
+        initialCharacters={initialCharacters}
+        charactersList={charactersList}
+        setCharactersList={setCharactersList}
+      />
     </MainLayout>
   )
 }
@@ -27,14 +33,29 @@ export const getStaticProps: GetStaticProps = async () => {
   while (next !== null) {
     const res = await getCharacterList(i)
     if (!res) break
-    characters = characters.concat(res!.results)
+    characters = characters.concat(res.results)
     next = res.next
     i++
   }
 
+  characters = await Promise.all(
+    characters.map(async char => {
+      const homeworld = await getPlanetNameById(getIdFromUrl(char.homeworld))
+      const films = await Promise.all(
+        char.films.map(filmUrl => {
+          const title = getFilmTitleById(getIdFromUrl(filmUrl))
+          return title
+        })
+      )
+
+      return { ...char, homeworld, films }
+    })
+  )
+
   return {
-    props: { characters }
+    props: { initialCharacters: characters },
+    revalidate: 86400
   }
 }
 
-export default HomePage
+export default React.memo(HomePage) 

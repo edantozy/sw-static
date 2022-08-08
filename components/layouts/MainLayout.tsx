@@ -16,7 +16,9 @@ export const MainLayout: FC<Props> = ({ children, title = "SW App" }) => {
             </Head>
             <Navbar />
             <main style={{
-                padding: '1rem'
+                padding: '1rem',
+                margin: 'auto',
+                maxWidth: '1700px'
             }}>
                 {children}
             </main>
