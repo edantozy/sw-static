@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
-import { Container, Grid, Pagination } from '@nextui-org/react'
+import { Container, Grid, Pagination, Text } from '@nextui-org/react'
 import { Character } from '../../interfaces'
 import { CharacterCard } from './CharacterCard'
 
@@ -22,18 +22,32 @@ export const CharacterList: FC<Props> = ({ initialCharacters, charactersList, se
     <>
       <Grid.Container gap={2} justify="flex-start">
         {
-          charactersList.map((character, i) => (
-            <CharacterCard
-              homeworld={character.homeworld}
-              name={character.name}
-              href={`/character/${character.name.replaceAll(' ', '-')}`}
-              key={i}
-            />
-          ))
+          (charactersList.length > 0) ? (
+            charactersList.map((character, i) => (
+              <CharacterCard
+                homeworld={character.homeworld}
+                name={character.name}
+                href={`/character/${character.name.replaceAll(' ', '-')}`}
+                key={i}
+              />
+            ))
+          ) : (
+            <Grid xs={12}>
+              <Container>
+                <Text h3 color="warning" css={{ textAlign: 'center' }}>No character found</Text>
+                <Text css={{ textAlign: 'center' }}>Try with another search</Text>
+              </Container>
+            </Grid>
+          )
         }
       </Grid.Container>
       <Container display="flex" justify="center" css={{ margin: '1.5rem' }}>
-        <Pagination css={{ margin: 'auto' }} total={totalPages} initialPage={page} onChange={(page) => setPage(page)} />
+        {
+          (totalPages > 0) ? (
+
+            <Pagination css={{ margin: 'auto' }} total={totalPages} initialPage={page} onChange={(page) => setPage(page)} />
+          ) : null
+        }
       </Container>
     </>
   )

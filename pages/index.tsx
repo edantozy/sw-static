@@ -5,18 +5,26 @@ import { Character } from '../interfaces'
 import { CharacterList } from '../components/character'
 import { MainLayout } from '../components/layouts'
 import { getCharacterList, getFilmTitleById, getIdFromUrl, getPlanetNameById } from '../utils'
+import { SearchButton, SearchForm } from '../components/search'
 
 interface Props {
   initialCharacters: Character[]
 }
 
 const HomePage: NextPage<Props> = ({ initialCharacters }) => {
+  const [characters, setCharacters] = useState(initialCharacters)
   const [charactersList, setCharactersList] = useState(initialCharacters)
+
   return (
     <MainLayout>
+      <SearchButton />
       <Text h1 css={{ textAlign: 'center' }}>Star Wars Characters</Text>
-      <CharacterList
+      <SearchForm
         initialCharacters={initialCharacters}
+        setCharacters={setCharacters}
+      />
+      <CharacterList
+        initialCharacters={characters}
         charactersList={charactersList}
         setCharactersList={setCharactersList}
       />
@@ -58,4 +66,4 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-export default React.memo(HomePage) 
+export default HomePage 

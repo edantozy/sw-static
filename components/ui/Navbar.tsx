@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, Link, Spacer, Text, useTheme } from '@nextui-org/react'
-import { SearchButton } from '../search'
 import NextLink from 'next/link'
 
 export const Navbar = () => {
@@ -29,7 +28,6 @@ export const Navbar = () => {
                     <Text color="white" h3 css={{ marginRight: '0.7rem' }}>App</Text>
                 </Link>
             </NextLink>
-            <SearchButton />
             <Spacer css={{ flex: 1 }} />
         </div>
     )
